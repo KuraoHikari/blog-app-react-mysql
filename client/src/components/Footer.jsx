@@ -1,7 +1,15 @@
 import React from 'react';
+import { Logo } from '../img';
 
 const Footer = () => {
-  return <div>Footer</div>;
+  return (
+    <footer>
+      <img src={Logo} alt="" />
+      <span>
+        FIGHT UNTIL DAWN <b>BLUE AOKI KURAO</b>.
+      </span>
+    </footer>
+  );
 };
 
 export default Footer;

@@ -1,7 +1,12 @@
 import React from 'react';
 
 const Single = () => {
-  return <div>Single</div>;
+  return (
+    <div className="single">
+      <div className="content"></div>
+      <div className="menu"></div>
+    </div>
+  );
 };
 
 export default Single;
