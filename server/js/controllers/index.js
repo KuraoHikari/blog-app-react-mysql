@@ -1,13 +1,5 @@
-const authController = require('./auth-controller');
-const postController = require('./post-controller');
-
-const loginUser = authController.loginUser;
-const registerUser = authController.registerUser;
-const findAllPost = postController.findAllPost;
-const findPost = postController.findPost;
-const createPost = postController.createPost;
-const updatePost = postController.updatePost;
-const deletePost = postController.deletePost;
+const { loginUser, registerUser } = require('./auth-controller');
+const { findAllPost, findPost, createPost, updatePost, deletePost } = require('./post-controller');
 
 module.exports = {
   loginUser,

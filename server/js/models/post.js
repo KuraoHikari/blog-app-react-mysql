@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
           notNull: { msg: 'desc required' },
         },
       },
-      Image: {
+      image: {
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
@@ -42,7 +42,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isInt: { msg: 'Category required' },
           notEmpty: { msg: 'Category required' },
           notNull: { msg: 'Category required' },
         },
