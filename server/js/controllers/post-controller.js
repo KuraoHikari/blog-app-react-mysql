@@ -55,20 +55,23 @@ async function createPost(req, res, next) {
 
     res.status(201).json(result);
   } catch (err) {
+    console.log('🚀 ~ file: post-controller.js:58 ~ createPost ~ err', err);
+
     next(err);
   }
 }
 async function updatePost(req, res, next) {
   try {
-    const { id } = req.params;
+    const id = +req.params.id;
     const { title, desc, image, cat } = req.body;
     const post = await Post.findByPk(id);
+    // console.log(post);
     if (!post) {
       throw { name: 'NotFound' };
     }
 
     const updatedPost = await post.update({ title, desc, image, cat });
-    return res.status(200).json(updatedPost);
+    res.status(201).json(updatedPost);
   } catch (err) {
     next(err);
   }

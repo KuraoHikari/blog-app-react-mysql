@@ -1,12 +1,13 @@
 const router = require('express').Router();
 const { findAllPost, findPost, createPost, updatePost, deletePost } = require('../controllers');
-const { authenticate } = require('../middleware');
+const { authenticate, multer, imageValidation, imgKit, authorize } = require('../middleware');
 
 router.get('/', findAllPost);
 router.get('/:id', findPost);
 router.use(authenticate);
-router.post('/', createPost);
-router.put('/:id', updatePost);
-router.delete('/:id', deletePost);
+router.post('/', multer, imageValidation, imgKit, createPost);
+
+router.put('/:id', authorize, multer, imageValidation, imgKit, updatePost);
+router.delete('/:id', authorize, deletePost);
 
 module.exports = router;

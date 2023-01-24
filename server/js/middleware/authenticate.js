@@ -18,6 +18,7 @@ async function authenticate(req, res, next) {
       email: payload.email,
       username: payload.username,
     };
+
     next();
   } catch (err) {
     next(err);
