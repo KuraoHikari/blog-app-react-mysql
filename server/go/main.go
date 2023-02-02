@@ -1,17 +1,12 @@
 package main
 
 import (
-	"errors"
-	"fmt"
 	"golang-blog-app/config"
 	controller "golang-blog-app/controllers"
 	"golang-blog-app/helper"
 	"golang-blog-app/middleware"
 	"golang-blog-app/repository"
 	"golang-blog-app/service"
-	"log"
-	"mime/multipart"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -20,25 +15,13 @@ import (
 var (
 	db             *gorm.DB                  = config.SetupDatabaseConnection()
 	userRepository repository.UserRepository = repository.NewUserRepository(db)
+	postRepository repository.PostRepository = repository.NewPostRepository(db)
 	jwtService     helper.JWTService         = helper.NewJWTService()
 	userService    service.UserService       = service.NewUserService(userRepository)
+	postService    service.PostService       = service.NewPostService(postRepository)
 	userController controller.UserController = controller.NewUserController(jwtService, userService)
+	postController controller.PostController = controller.NewPostController(jwtService, postService)
 )
-
-func checkContentType(file *multipart.FileHeader, contentTypes ...string) error {
-	if len(contentTypes) > 0 {
-		for _, contentType := range contentTypes {
-			contentTypeFile := file.Header.Get("Content-Type")
-			if contentTypeFile == contentType {
-				return nil
-			}
-		}
-
-		return errors.New("not allowed file type")
-	} else {
-		return errors.New("not found content type to be checking")
-	}
-}
 
 func main() {
 	defer config.CloseDatabaseConnection(db)
@@ -55,26 +38,12 @@ func main() {
 
 	postRoutes := server.Group("api/post", middleware.AuthorizeJWT(jwtService))
 	{
-		postRoutes.POST("/", middleware.ImageValidate(), middleware.ImageUploader(), func(c *gin.Context) {
-			userId := c.MustGet("user_id").(string)
-			imageUrl := c.MustGet("image_url").(string)
+		postRoutes.GET("/", postController.FindAllPostv2)
+		postRoutes.GET("/:id", postController.FindOneByID)
+		postRoutes.POST("/", middleware.ImageValidate(), middleware.ImageUploader(), postController.CreatePost)
+		postRoutes.PUT("/:id", middleware.ImageValidate(), middleware.ImageUploader(), postController.UpdatePost)
+		postRoutes.DELETE("/:id", postController.DeletePost)
 
-			log.Println(userId, "ini user id")
-			log.Println(imageUrl, "ini image url")
-			// Single file
-			// file, _ := c.FormFile("images")
-			// errCheckContentType := checkContentType(file, "image/jpg", "image/png", "image/gif")
-			// fmt.Printf("Uploaded File: %+v\n", file.Filename)
-			// fmt.Printf("File Size: %+v\n", file.Size)
-			// fmt.Printf("MIME Header: %+v\n", file.Header)
-			// log.Println(errCheckContentType)
-			// log.Println(file)
-
-			// Upload the file to specific dst.
-			// c.SaveUploadedFile(file, dst)
-
-			c.String(http.StatusOK, fmt.Sprintf("'%s' userId!", userId))
-		})
 	}
 	server.Run(":5000")
 }

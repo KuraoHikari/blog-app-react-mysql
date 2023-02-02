@@ -24,7 +24,7 @@ func NewUserController(
 	jwtService helper.JWTService,
 	userService service.UserService,
 ) UserController {
-	return &userController{	
+	return &userController{
 		jwtService:  jwtService,
 		userService: userService,
 	}
@@ -50,7 +50,7 @@ func (c *userController) Login(ctx *gin.Context) {
 
 	user, _ := c.userService.FindUserByEmail(loginRequest.Email)
 
-	token := c.jwtService.GenerateToken(strconv.FormatInt(user.ID, 10))
+	token := c.jwtService.GenerateToken(strconv.FormatUint(user.ID, 10))
 	user.Token = token
 	response := helper.BuildResponse(true, "OK!", user)
 	ctx.JSON(http.StatusOK, response)
@@ -74,7 +74,7 @@ func (c *userController) Register(ctx *gin.Context) {
 		return
 	}
 
-	token := c.jwtService.GenerateToken(strconv.FormatInt(user.ID, 10))
+	token := c.jwtService.GenerateToken(strconv.FormatUint(user.ID, 10))
 	user.Token = token
 	response := helper.BuildResponse(true, "OK!", user)
 	ctx.JSON(http.StatusCreated, response)

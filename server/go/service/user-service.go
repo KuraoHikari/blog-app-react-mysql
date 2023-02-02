@@ -13,17 +13,17 @@ import (
 )
 
 type UserResponse struct {
-	ID    int64  `json:"id"`
-	Username  string `json:"name"`
-	Email string `json:"email"`
-	Token string `json:"token,omitempty"`
+	ID       uint64 `json:"id"`
+	Username string `json:"name"`
+	Email    string `json:"email"`
+	Token    string `json:"token,omitempty"`
 }
 
 func NewUserResponse(user entity.User) UserResponse {
 	return UserResponse{
-		ID:    user.ID,
-		Email: user.Email,
-		Username:  user.Username,
+		ID:       user.ID,
+		Email:    user.Email,
+		Username: user.Username,
 	}
 }
 
@@ -43,7 +43,7 @@ func NewUserService(userRepository repository.UserRepository) UserService {
 	}
 }
 
-func (c *userService)CreateUser(registerRequest dto.RegisterRequest) (*UserResponse, error){
+func (c *userService) CreateUser(registerRequest dto.RegisterRequest) (*UserResponse, error) {
 	user, err := c.userRepository.FindByEmail(registerRequest.Email)
 	if err == nil {
 		return nil, errors.New("user already exists")
@@ -60,7 +60,7 @@ func (c *userService)CreateUser(registerRequest dto.RegisterRequest) (*UserRespo
 	res := NewUserResponse(user)
 	return &res, nil
 }
-func (c *userService)FindUserByEmail(email string) (*UserResponse, error){
+func (c *userService) FindUserByEmail(email string) (*UserResponse, error) {
 	user, err := c.userRepository.FindByEmail(email)
 	if err != nil {
 		return nil, err
@@ -68,7 +68,7 @@ func (c *userService)FindUserByEmail(email string) (*UserResponse, error){
 	userResponse := NewUserResponse(user)
 	return &userResponse, nil
 }
-func (c *userService)VerifyCredential(email string, password string) error{
+func (c *userService) VerifyCredential(email string, password string) error {
 	user, err := c.userRepository.FindByEmail(email)
 	if err != nil {
 		println("hehe")
