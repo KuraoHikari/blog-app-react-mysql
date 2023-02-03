@@ -52,6 +52,7 @@ func (c *userController) Login(ctx *gin.Context) {
 
 	token := c.jwtService.GenerateToken(strconv.FormatUint(user.ID, 10))
 	user.Token = token
+
 	response := helper.BuildResponse(true, "OK!", user)
 	ctx.JSON(http.StatusOK, response)
 

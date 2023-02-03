@@ -12,7 +12,7 @@ func ImageUploader() gin.HandlerFunc {
 		if image_url == "" {
 			file, _ := c.FormFile("images")
 
-			imageUrl, err := helper.CloudinaryUploader(file)
+			imageUrl, err := helper.ImageKitUploader(file)
 			if err != nil {
 				response := helper.BuildErrorResponse("Failed to process request", err.Error(), nil)
 				c.AbortWithStatusJSON(401, response)

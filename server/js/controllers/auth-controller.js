@@ -1,14 +1,16 @@
-const { checkPassword, signToken, SuccessResponse } = require("../helper");
-const { User } = require("../models");
+const { checkPassword, signToken, SuccessResponse } = require('../helper');
+const { User } = require('../models');
 
 async function registerUser(req, res, next) {
   try {
     const { email, password, username } = req.body;
+
     const result = await User.create({ email, password, username });
 
-    return res
-      .status(201)
-      .json(SuccessResponse({ id: result.id, email: result.email }));
+    const { id } = result;
+    const access_token = signToken({ id, username, email });
+
+    return res.status(200).json(SuccessResponse({ id, username, email, token: access_token }));
   } catch (err) {
     next(err);
   }
@@ -21,12 +23,12 @@ async function loginUser(req, res, next) {
       const { id, email, username, password: resPassword } = result;
       if (checkPassword(password, resPassword)) {
         const access_token = signToken({ id, username, email });
-        res.status(200).json(SuccessResponse({ access_token }));
+        res.status(200).json(SuccessResponse({ id, username, email, token: access_token }));
       } else {
-        throw { name: "UnauthorizedLogin" };
+        throw { name: 'UnauthorizedLogin' };
       }
     } else {
-      throw { name: "UnauthorizedLogin" };
+      throw { name: 'UnauthorizedLogin' };
     }
   } catch (err) {
     next(err);

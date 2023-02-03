@@ -5,7 +5,6 @@ import (
 	"golang-blog-app/entity"
 	"golang-blog-app/helper"
 	"golang-blog-app/service"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -38,17 +37,6 @@ func NewPostController(
 	}
 }
 
-type resv2 struct {
-	post  []entity.Post
-	total int64
-}
-
-type Responsev2 struct {
-	Total int64 `json:"total"`
-
-	Post []entity.Post `json:"post"`
-}
-
 func (c *postController) FindAllPostv2(context *gin.Context) {
 	pageStr := context.Query("page")
 
@@ -57,8 +45,6 @@ func (c *postController) FindAllPostv2(context *gin.Context) {
 	limit, offset, page := helper.GetPaginationPage(pageStr, sizeStr)
 
 	posts, total := c.postService.FindAllv2(limit, offset)
-	log.Println(total, "ini total ==========")
-	log.Println(limit, "ini total ==========")
 
 	data := helper.GetPagingData(posts, int(total), page, limit)
 
@@ -93,8 +79,6 @@ func (c *postController) CreatePost(context *gin.Context) {
 	var newPost dto.CreatePostRequest
 	userId := context.MustGet("user_id").(string)
 	imageUrl := context.MustGet("image_url").(string)
-	log.Println(userId, "ini user id")
-	log.Println(imageUrl, "ini image url")
 
 	errDTO := context.ShouldBind(&newPost)
 	if errDTO != nil {
@@ -135,7 +119,7 @@ func (c *postController) UpdatePost(context *gin.Context) {
 		}
 		postUpdateDTO.ID = postId
 		postUpdateDTO.Image = imageUrl
-		log.Println("ini update", postUpdateDTO.ID, postUpdateDTO.UserID, postUpdateDTO.Title, "ini update")
+
 		if c.postService.IsAllowedToEdit(userId, postId) {
 			id, errID := strconv.ParseUint(userId, 10, 64)
 			if errID == nil {

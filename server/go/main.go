@@ -8,6 +8,7 @@ import (
 	"golang-blog-app/repository"
 	"golang-blog-app/service"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -27,6 +28,7 @@ func main() {
 	defer config.CloseDatabaseConnection(db)
 
 	server := gin.New()
+	server.Use(cors.Default())
 	server.Use(gin.LoggerWithFormatter(helper.LoggerConsole))
 	server.Use(gin.Recovery())
 	server.MaxMultipartMemory = 8 << 20 // 8 MiB
@@ -35,14 +37,17 @@ func main() {
 		authRoutes.POST("/login", userController.Login)
 		authRoutes.POST("/register", userController.Register)
 	}
-
-	postRoutes := server.Group("api/post", middleware.AuthorizeJWT(jwtService))
+	postRoutes := server.Group("api/post")
 	{
 		postRoutes.GET("/", postController.FindAllPostv2)
 		postRoutes.GET("/:id", postController.FindOneByID)
-		postRoutes.POST("/", middleware.ImageValidate(), middleware.ImageUploader(), postController.CreatePost)
-		postRoutes.PUT("/:id", middleware.ImageValidate(), middleware.ImageUploader(), postController.UpdatePost)
-		postRoutes.DELETE("/:id", postController.DeletePost)
+	}
+
+	authpostRoutes := server.Group("api/post", middleware.AuthorizeJWT(jwtService))
+	{
+		authpostRoutes.POST("/", middleware.ImageValidate(), middleware.ImageUploader(), postController.CreatePost)
+		authpostRoutes.PUT("/:id", middleware.ImageValidate(), middleware.ImageUploader(), postController.UpdatePost)
+		authpostRoutes.DELETE("/:id", postController.DeletePost)
 
 	}
 	server.Run(":5000")
