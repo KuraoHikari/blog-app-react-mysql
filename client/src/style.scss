@@ -34,14 +34,24 @@ $lightGreen: #b9e7e7;
         width: 200px;
         gap: 20px;
 
-        input {
+        .error {
+          padding: 10px;
+          border: none;
+          border-bottom: 1px solid rgb(255, 141, 141);
+        }
+
+        .input {
           padding: 10px;
           border: none;
           border-bottom: 1px solid gray;
         }
 
         button {
-          padding: 10px;
+          .fa {
+            margin-left: -12px;
+            margin-right: 8px;
+          }
+          padding: 10px 12px;
           border: none;
           background-color: teal;
           cursor: pointer;

@@ -1,7 +1,7 @@
 function SuccessResponse(data) {
   return {
     status: true,
-    message: "Success",
+    message: 'Success',
     errors: null,
     data: data,
   };
@@ -9,7 +9,7 @@ function SuccessResponse(data) {
 function FailedResponse(errors) {
   return {
     status: false,
-    message: "Failed",
+    message: errors.message,
     errors: errors,
     data: null,
   };

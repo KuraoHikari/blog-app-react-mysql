@@ -21,9 +21,6 @@ export const registerUser = (formData, history) => async (dispatch) => {
     dispatch({ type: LOADING, data: true });
     const { data } = await register(formData);
 
-    if (!data.status) {
-      throw { message: 'email/password incorect' };
-    }
     //note perbaikan register login respon buat js
     dispatch({ type: REGISTER, data: data.data });
     history('../', { replace: true });

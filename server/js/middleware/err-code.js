@@ -8,7 +8,7 @@ const errorCodes = {
   SequelizeUniqueConstraintError: {
     code: 400,
     message: (err) => {
-      return { message: 'email already used' };
+      return { message: 'user already exists' };
     },
   },
   UnauthorizedLogin: {
