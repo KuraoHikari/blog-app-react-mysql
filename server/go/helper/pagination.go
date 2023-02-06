@@ -1,15 +1,23 @@
 package helper
 
 import (
+	"fmt"
 	"golang-blog-app/entity"
 	"math"
 	"strconv"
 )
 
-func GetPaginationPage(page string, size string) (int, int, int) {
+func GetPaginationPage(page string, size string, cat string) (int, int, int, string) {
 	var limit int
 	var offset int
 	var pageRetrun int
+	var catFltr string
+
+	if cat == "" {
+		catFltr = ""
+	} else {
+		catFltr = fmt.Sprintf("cat = '%s'", cat)
+	}
 
 	if size == "" {
 		limit = 3
@@ -36,7 +44,7 @@ func GetPaginationPage(page string, size string) (int, int, int) {
 
 	}
 
-	return limit, offset, pageRetrun
+	return limit, offset, pageRetrun, catFltr
 
 }
 

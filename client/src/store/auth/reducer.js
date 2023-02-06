@@ -26,7 +26,7 @@ export default function reducer(state = initialAuthState, action) {
     case ERR_CONDITION:
       const newError = {
         ...state,
-        isError: action.data,
+        isError: action?.data,
         isLoading: false,
       };
 

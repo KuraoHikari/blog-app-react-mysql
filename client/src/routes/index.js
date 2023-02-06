@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Home, Register, Login, Single, Write } from '../pages';
 import { Layout } from '../layout';
+import { Protected, ProtectedAuth } from './routeGuard';
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -8,7 +9,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home />,
+        element: <Home></Home>,
       },
       {
         path: '/post/:id',
@@ -16,16 +17,28 @@ export const router = createBrowserRouter([
       },
       {
         path: '/write',
-        element: <Write />,
+        element: (
+          <ProtectedAuth>
+            <Write />
+          </ProtectedAuth>
+        ),
       },
     ],
   },
   {
     path: '/register',
-    element: <Register />,
+    element: (
+      <Protected>
+        <Register />
+      </Protected>
+    ),
   },
   {
     path: '/login',
-    element: <Login />,
+    element: (
+      <Protected>
+        <Login />
+      </Protected>
+    ),
   },
 ]);

@@ -11,7 +11,7 @@ type PostRepository interface {
 	DeletePost(p entity.Post)
 	AllPost() []entity.Post
 	FindPostByID(postID uint64) entity.Post
-	FindAll(page int, limit int) (post []entity.Post, total int64)
+	FindAll(page int, limit int, filter string) (post []entity.Post, total int64)
 }
 
 type postConnection struct {
@@ -24,8 +24,11 @@ func NewPostRepository(dbConn *gorm.DB) PostRepository {
 	}
 }
 
-func (db *postConnection) FindAll(limit int, offset int) (posts []entity.Post, total int64) {
-	db.connection.Preload("User").Preload("Posts.User").
+func (db *postConnection) FindAll(limit int, offset int, filter string) (posts []entity.Post, total int64) {
+	db.connection.
+		Preload("User").
+		Preload("Posts.User").
+		Where(filter).
 		Model(&entity.Post{}).
 		Count(&total).
 		Limit(limit).

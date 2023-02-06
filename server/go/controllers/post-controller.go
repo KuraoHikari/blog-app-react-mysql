@@ -39,12 +39,12 @@ func NewPostController(
 
 func (c *postController) FindAllPostv2(context *gin.Context) {
 	pageStr := context.Query("page")
-
+	catFltr := context.Query("cat")
 	sizeStr := context.Query("size")
 
-	limit, offset, page := helper.GetPaginationPage(pageStr, sizeStr)
+	limit, offset, page, filter := helper.GetPaginationPage(pageStr, sizeStr, catFltr)
 
-	posts, total := c.postService.FindAllv2(limit, offset)
+	posts, total := c.postService.FindAllv2(limit, offset, filter)
 
 	data := helper.GetPagingData(posts, int(total), page, limit)
 

@@ -17,7 +17,7 @@ type PostService interface {
 	All() []entity.Post
 	FindPostByID(postID uint64) entity.Post
 	IsAllowedToEdit(userID string, postID uint64) bool
-	FindAllv2(limit int, offset int) (posts []entity.Post, total int64)
+	FindAllv2(limit int, offset int, filtser string) (posts []entity.Post, total int64)
 }
 
 type postService struct {
@@ -29,8 +29,8 @@ func NewPostService(postRepo repository.PostRepository) PostService {
 		postRepository: postRepo,
 	}
 }
-func (service *postService) FindAllv2(limit int, offset int) (posts []entity.Post, total int64) {
-	return service.postRepository.FindAll(limit, offset)
+func (service *postService) FindAllv2(limit int, offset int, filter string) (posts []entity.Post, total int64) {
+	return service.postRepository.FindAll(limit, offset, filter)
 }
 
 func (service *postService) Create(p dto.CreatePostRequest) entity.Post {
