@@ -1,4 +1,4 @@
-import { LOADING, LOGIN, ERR_CONDITION, REGISTER } from './type';
+import { LOADING, LOGIN, ERR_CONDITION, REGISTER, CURRENT_USER } from './type';
 
 const initialAuthState = {
   isLoading: false,
@@ -15,6 +15,8 @@ export default function reducer(state = initialAuthState, action) {
       };
 
       return loading;
+    case CURRENT_USER:
+      return { ...state, authData: action.data, isLoading: false };
     case LOGIN:
       localStorage.setItem('access_token', JSON.stringify({ ...action?.data }));
 

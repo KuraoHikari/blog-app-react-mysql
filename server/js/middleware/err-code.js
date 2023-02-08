@@ -23,10 +23,10 @@ const errorCodes = {
       return { message: 'Unauthorized' };
     },
   },
-  'Invalid Token': {
+  JsonWebTokenError: {
     code: 401,
     message: (err) => {
-      return { message: 'Invalid Token' };
+      return { message: 'Token is not valid' };
     },
   },
   NotFound: {

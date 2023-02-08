@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import 'react-quill/dist/quill.snow.css';
 
 const Write = () => {
   const state = useLocation().state;
+  const { isLoading, isError, authData } = useSelector((state) => ({
+    isLoading: state.auth.isLoading,
+    isError: state.auth.isError,
+    authData: state.auth.authData,
+  }));
   const [value, setValue] = useState(state?.title || '');
   const [cat, setCat] = useState(state?.cat || '');
   return (
     <div className="add">
       <div className="content">
+        {authData?.name}
         <input type="text" placeholder="Title" />
         <div className="editorContainer">
           <ReactQuill className="editor" theme="snow" value={value} onChange={setValue} />
