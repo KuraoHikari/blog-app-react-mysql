@@ -1,5 +1,6 @@
 import { login, register } from '../../api';
 import { registerValidation } from '../../utils/registerValidation';
+
 import { LOADING, LOGIN, REGISTER, ERR_CONDITION, CURRENT_USER } from './type';
 
 export const loginUser = (formData, history) => async (dispatch) => {
@@ -8,7 +9,7 @@ export const loginUser = (formData, history) => async (dispatch) => {
     const { data } = await login(formData);
 
     if (!data.status) {
-      throw '';
+      throw Error('email/password incorect');
     }
     dispatch({ type: LOGIN, data: data.data });
     history('../', { replace: true });
@@ -27,6 +28,7 @@ export const registerUser = (formData, history) => async (dispatch) => {
       dispatch({ type: REGISTER, data: data.data });
       history('../', { replace: true });
     } else {
+      /* eslint-disable */
       throw {
         response: {
           data: validateData,
@@ -50,6 +52,16 @@ export const authCurrentUser = (history) => async (dispatch) => {
     } else {
       dispatch({ type: CURRENT_USER, data: null });
     }
+  } catch (err) {
+    dispatch({ type: ERR_CONDITION, data: { message: '500 internal server error' } });
+  }
+};
+
+export const logoutUser = (history) => async (dispatch) => {
+  try {
+    dispatch({ type: LOADING, data: true });
+    localStorage.removeItem('access_token');
+    dispatch({ type: CURRENT_USER, data: null });
   } catch (err) {
     dispatch({ type: ERR_CONDITION, data: { message: '500 internal server error' } });
   }

@@ -1,25 +1,38 @@
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { createPost } from '../store/post/action';
 import 'react-quill/dist/quill.snow.css';
 
 const Write = () => {
-  const state = useLocation().state;
-  const { isLoading, isError, authData } = useSelector((state) => ({
-    isLoading: state.auth.isLoading,
-    isError: state.auth.isError,
-    authData: state.auth.authData,
+  const { isCreateLoading, isCreateError } = useSelector((state) => ({
+    isCreateLoading: state.post.isCreateLoading,
+    isError: state.post.isCreateError,
   }));
-  const [value, setValue] = useState(state?.title || '');
-  const [cat, setCat] = useState(state?.cat || '');
+  const dispatch = useDispatch();
+  const history = useNavigate();
+  const [desc, setDesc] = useState('');
+  const [title, setTitle] = useState('');
+  const [cat, setCat] = useState('');
+  const [file, setFile] = useState(null);
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    const payload = {
+      images: file,
+      title: title,
+      cat: cat,
+      desc: desc,
+    };
+    dispatch(createPost(payload, history));
+  };
   return (
     <div className="add">
       <div className="content">
-        {authData?.name}
-        <input type="text" placeholder="Title" />
+        <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
         <div className="editorContainer">
-          <ReactQuill className="editor" theme="snow" value={value} onChange={setValue} />
+          <ReactQuill className="editor" theme="snow" value={desc} onChange={setDesc} />
         </div>
       </div>
       <div className="menu">
@@ -31,13 +44,14 @@ const Write = () => {
           <span>
             <b>Visibility: </b> Public
           </span>
-          <input style={{ display: 'none' }} type="file" id="file" name="" />
+          <input style={{ display: 'none' }} type="file" id="file" name="" onChange={(e) => setFile(e.target.files[0])} accept="image/png, image/jpeg, image/jpg" />
           <label className="file" htmlFor="file">
             Upload Image
           </label>
           <div className="buttons">
-            <button>Save as a draft</button>
-            <button>Publish</button>
+            {/* <button>Save as a draft</button> */}
+
+            <button onClick={handleClick}>{isCreateLoading && <i className="fa fa-circle-o-notch fa-spin"></i>} Publish</button>
           </div>
         </div>
         <div className="item">

@@ -1,12 +1,21 @@
 import React from 'react';
 import { Logo } from '../img';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../store/auth/action';
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const { authData } = useSelector((state) => ({
     authData: state.auth.authData,
   }));
+  const handleLogout = (e) => {
+    e.preventDefault();
+    // console.log(formData)
+
+    // registerValidation(formData);
+    dispatch(logoutUser());
+  };
   return (
     <div className="navbar">
       <div className="container">
@@ -34,7 +43,7 @@ const Navbar = () => {
           </Link>
           {authData && <span>{authData?.username}</span>}
 
-          <span>Logout</span>
+          <span onClick={handleLogout}>Logout</span>
           {!authData && (
             <Link className="link" to="/login">
               Login
