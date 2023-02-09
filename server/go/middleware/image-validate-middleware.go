@@ -32,7 +32,7 @@ func ImageValidate() gin.HandlerFunc {
 				return
 			}
 			fmt.Printf("MIME Header: %+v\n", file.Header)
-			errCheckContentType := helper.CheckContentType(file, "image/jpg", "image/png")
+			errCheckContentType := helper.CheckContentType(file, "image/jpg", "image/png", "image/jpeg")
 
 			if errCheckContentType != nil {
 				response := helper.BuildErrorResponse("Failed to process request", "file must be in img format", nil)
