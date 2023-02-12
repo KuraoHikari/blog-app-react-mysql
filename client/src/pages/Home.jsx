@@ -19,15 +19,15 @@ const Home = () => {
     console.log('🚀 ~ file: Home.jsx:19 ~ useEffect ~ posts', posts);
   }, [cat]);
 
-  // const getText = (html) => {
-  //   const doc = new DOMParser().parseFromString(html, 'text/html');
-  //   return doc.body.textContent;
-  // };
   const getText = (html) => {
-    var t = document.createElement('template');
-    t.innerHTML = html;
-    return t.content;
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent;
   };
+  // const getText = (html) => {
+  //   var t = document.createElement('template');
+  //   t.innerHTML = html;
+  //   return t.content;
+  // };
 
   return (
     <div className="home">
@@ -42,11 +42,10 @@ const Home = () => {
                 <Link className="link" to={`/post/${post.id}`}>
                   <h1>{post.title}</h1>
                 </Link>
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(post.desc),
-                  }}
-                />
+                <div className="desc">
+                  <p>{getText(post.desc)}</p>
+                </div>
+
                 <button>Read More</button>
               </div>
             </div>
