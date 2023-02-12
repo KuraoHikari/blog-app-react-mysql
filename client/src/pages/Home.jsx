@@ -32,11 +32,11 @@ const Home = () => {
   return (
     <div className="home">
       <div className="posts">
-        {posts &&
+        {!isCreateLoading &&
           posts?.rows?.map((post) => (
             <div className="post" key={post.id}>
               <div className="img">
-                <img src={post.image} alt="" />
+                <img src={post.image} alt={`${post.title}.png`} loading="lazy" />
               </div>
               <div className="content">
                 <Link className="link" to={`/post/${post.id}`}>
