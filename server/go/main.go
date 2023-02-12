@@ -32,7 +32,7 @@ func CORS() gin.HandlerFunc {
 		// c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, access_token, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 		// c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE") w.Header().Set("Access-Control-Allow-Origin", "https://www.google.com")
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, X-CSRF-Token, access_token")
 		if c.Request.Method == "OPTIONS" {
 			c.IndentedJSON(204, "")
@@ -70,16 +70,16 @@ func main() {
 	// server.Use(cors.Default())
 	postRoutes := server.Group("api/post")
 	{
-		postRoutes.GET("/", postController.FindAllPostv2)
-		postRoutes.GET("/:id", postController.FindOneByID)
+		postRoutes.GET("/get-all", postController.FindAllPostv2)
+		postRoutes.GET("/get-one/:id", postController.FindOneByID)
 	}
 	// server.Use(cors.Default())
 
 	authpostRoutes := server.Group("api/post", middleware.AuthorizeJWT(jwtService))
 	{
 		authpostRoutes.POST("/create", middleware.ImageValidate(), middleware.ImageUploader(), postController.CreatePost)
-		authpostRoutes.PUT("/:id", middleware.ImageValidate(), middleware.ImageUploader(), postController.UpdatePost)
-		authpostRoutes.DELETE("/:id", postController.DeletePost)
+		authpostRoutes.PUT("/update/:id", middleware.ImageValidate(), middleware.ImageUploader(), postController.UpdatePost)
+		authpostRoutes.DELETE("/delete/:id", postController.DeletePost)
 
 	}
 	server.Run(":5000")

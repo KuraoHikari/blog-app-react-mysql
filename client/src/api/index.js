@@ -12,3 +12,5 @@ export const createPostApi = (formData, headers) =>
     data: formData,
     cache: 'no-cache',
   });
+
+export const getAllPost = (url) => API.get(`/post/get-all${url}`);

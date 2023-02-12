@@ -1,4 +1,4 @@
-import { LOADING, ERR_CONDITION } from './type';
+import { LOADING, ERR_CONDITION, FETCH_POST } from './type';
 
 const initialPostState = {
   isCreateLoading: false,
@@ -15,6 +15,14 @@ export default function reducer(state = initialPostState, action) {
       };
 
       return loading;
+
+    case FETCH_POST:
+      const posts = {
+        ...state,
+        posts: action.data,
+      };
+
+      return posts;
     case ERR_CONDITION:
       const newError = {
         ...state,
