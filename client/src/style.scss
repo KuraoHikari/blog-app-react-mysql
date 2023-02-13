@@ -143,6 +143,27 @@ $lightGreen: #b9e7e7;
         flex-direction: column;
         gap: 150px;
 
+        .pagination {
+          display: flex;
+          justify-content: center;
+        }
+
+        .pagination a {
+          color: black;
+          float: left;
+          padding: 8px 16px;
+          text-decoration: none;
+        }
+
+        .pagination a.active {
+          background-color: teal;
+          color: white;
+        }
+
+        .pagination a:hover:not(.active) {
+          background-color: #ddd;
+        }
+
         .post {
           display: flex;
           gap: 100px;

@@ -1,6 +1,7 @@
 import { createPostApi, getAllPost } from '../../api';
 import FormData from 'form-data';
 import { LOADING, ERR_CONDITION, FETCH_POST } from './type';
+import { logoutUser } from '../auth/action';
 
 export const createPost = (formData, history) => async (dispatch) => {
   try {
@@ -19,7 +20,12 @@ export const createPost = (formData, history) => async (dispatch) => {
     dispatch({ type: LOADING, data: false });
     history('/', { replace: true });
   } catch (err) {
-    dispatch({ type: ERR_CONDITION, data: { message: '500 internal server error' } });
+    if (err?.response?.data.message === 'Token is not valid') {
+      dispatch(logoutUser());
+      history('/login', { replace: true });
+    } else {
+      dispatch({ type: ERR_CONDITION, data: { message: '500 internal server error' } });
+    }
   }
 };
 
