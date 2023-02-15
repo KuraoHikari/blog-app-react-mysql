@@ -62,6 +62,7 @@ export const logoutUser = (history) => async (dispatch) => {
     dispatch({ type: LOADING, data: true });
     localStorage.removeItem('access_token');
     dispatch({ type: CURRENT_USER, data: null });
+    dispatch({ type: LOADING, data: false });
   } catch (err) {
     dispatch({ type: ERR_CONDITION, data: { message: '500 internal server error' } });
   }

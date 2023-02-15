@@ -44,8 +44,8 @@ const Navbar = () => {
             <h6>FOOD</h6>
           </Link>
           {authData && <span>{authData?.username}</span>}
+          {authData && <span onClick={handleLogout}>Logout</span>}
 
-          <span onClick={handleLogout}>Logout</span>
           {!authData && (
             <Link className="link" to="/login">
               Login

@@ -1,9 +1,10 @@
-import { LOADING, ERR_CONDITION, FETCH_POST } from './type';
+import { LOADING, ERR_CONDITION, FETCH_POST, FETCH_ONE_POST } from './type';
 
 const initialPostState = {
   isCreateLoading: false,
   isCreateError: null,
   posts: null,
+  post: null,
 };
 
 export default function reducer(state = initialPostState, action) {
@@ -15,6 +16,14 @@ export default function reducer(state = initialPostState, action) {
       };
 
       return loading;
+
+    case FETCH_ONE_POST:
+      const post = {
+        ...state,
+        post: action.data,
+      };
+
+      return post;
 
     case FETCH_POST:
       const posts = {

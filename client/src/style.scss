@@ -10,6 +10,139 @@ $lightGreen: #b9e7e7;
       text-decoration: none;
       color: inherit;
     }
+
+    //LOADING
+
+    $c-01: teal;
+    $c-02: #a6dcee;
+
+    $font-01: 'Oxygen', sans-serif;
+
+    .loading {
+      width: 100%;
+      height: 100vh;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .loading-loader {
+        width: 80px;
+        height: 50px;
+        position: relative;
+
+        p {
+          top: 0;
+          padding: 0;
+          margin: 0;
+          color: $c-01;
+          font-family: $font-01;
+          animation: text 3.5s ease both infinite;
+          font-size: 12px;
+          letter-spacing: 1px;
+
+          @keyframes text {
+            0% {
+              letter-spacing: 1px;
+              transform: translateX(0px);
+            }
+
+            40% {
+              letter-spacing: 2px;
+              transform: translateX(26px);
+            }
+
+            80% {
+              letter-spacing: 1px;
+              transform: translateX(32px);
+            }
+
+            90% {
+              letter-spacing: 2px;
+              transform: translateX(0px);
+            }
+
+            100% {
+              letter-spacing: 1px;
+              transform: translateX(0px);
+            }
+          }
+        }
+        span {
+          background-color: $c-01;
+          border-radius: 50px;
+          display: block;
+          height: 16px;
+          width: 16px;
+          bottom: 0;
+          position: absolute;
+          transform: translateX(64px);
+          animation: loading 3.5s ease both infinite;
+
+          &:before {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 100%;
+            background-color: $c-02;
+            border-radius: inherit;
+            animation: loading2 3.5s ease both infinite;
+          }
+
+          @keyframes loading {
+            0% {
+              width: 16px;
+              transform: translateX(0px);
+            }
+
+            40% {
+              width: 100%;
+              transform: translateX(0px);
+            }
+
+            80% {
+              width: 16px;
+              transform: translateX(64px);
+            }
+
+            90% {
+              width: 100%;
+              transform: translateX(0px);
+            }
+
+            100% {
+              width: 16px;
+              transform: translateX(0px);
+            }
+          }
+          @keyframes loading2 {
+            0% {
+              transform: translateX(0px);
+              width: 16px;
+            }
+
+            40% {
+              transform: translateX(0%);
+              width: 80%;
+            }
+
+            80% {
+              width: 100%;
+              transform: translateX(0px);
+            }
+
+            90% {
+              width: 80%;
+              transform: translateX(15px);
+            }
+            100% {
+              transform: translateX(0px);
+              width: 16px;
+            }
+          }
+        }
+      }
+    }
     //LOGIN & REGISTER
 
     .auth {
@@ -132,6 +265,58 @@ $lightGreen: #b9e7e7;
       img {
         height: 50px;
       }
+    }
+    .mainbox {
+      background-color: teal;
+      margin: auto;
+      height: 600px;
+      width: 600px;
+      position: relative;
+    }
+
+    .err {
+      color: #ffffff;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 11rem;
+      position: absolute;
+      left: 20%;
+      top: 8%;
+    }
+
+    .far {
+      position: absolute;
+      font-size: 8.5rem;
+      left: 42%;
+      top: 15%;
+      color: #ffffff;
+    }
+
+    .err2 {
+      color: #ffffff;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 11rem;
+      position: absolute;
+      left: 68%;
+      top: 8%;
+    }
+
+    .msg {
+      text-align: center;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 1.6rem;
+      position: absolute;
+      left: 16%;
+      top: 45%;
+      width: 75%;
+    }
+
+    a {
+      text-decoration: none;
+      color: white;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
 
     //HOME

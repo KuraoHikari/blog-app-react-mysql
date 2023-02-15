@@ -14,3 +14,4 @@ export const createPostApi = (formData, headers) =>
   });
 
 export const getAllPost = (url) => API.get(`/post/get-all${url}`);
+export const getOnePost = (url) => API.get(`/post/get-one/${url}`);
