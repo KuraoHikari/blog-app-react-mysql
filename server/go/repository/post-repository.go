@@ -27,7 +27,6 @@ func NewPostRepository(dbConn *gorm.DB) PostRepository {
 func (db *postConnection) FindAll(limit int, offset int, filter string) (posts []entity.Post, total int64) {
 	db.connection.
 		Preload("User").
-		Preload("Posts.User").
 		Where(filter).
 		Model(&entity.Post{}).
 		Count(&total).

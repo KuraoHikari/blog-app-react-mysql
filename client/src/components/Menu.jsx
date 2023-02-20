@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPostv2 } from '../store/post/action';
-
+import React from 'react';
+import { Link } from 'react-router-dom';
 const Menu = ({ recomended }) => {
-  // const posts = [];
-
-  // useEffect(() => {
-  //   dispatch(fetchPostv2(`/?cat=${cat}`));
-
-  //   console.log(cat);
-  // }, []);
   return (
     <div className="menu">
       <h1>Other posts you may like</h1>
       {recomended?.map((post) => (
         <div className="post" key={post?.id}>
           <img src={post?.image} alt="" />
-          <h2>{post?.title}</h2>
-          <button>Read More</button>
+          <h2>
+            {post?.title}
+            {post?.id}
+          </h2>
+          <Link to={`/post/${post?.id}`}>
+            <button>Read More</button>
+          </Link>
         </div>
       ))}
     </div>

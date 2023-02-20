@@ -14,4 +14,13 @@ export const createPostApi = (formData, headers) =>
   });
 
 export const getAllPost = (url) => API.get(`/post/get-all${url}`);
-export const getOnePost = (url) => API.get(`/post/get-one/${url}`);
+export const getOnePost = (id) => API.get(`/post/get-one/${id}`);
+// export const deleteOnePost = (id) => API.delete(`/post/delete/${id}`);
+
+export const deleteOnePost = (id, headers) =>
+  API({
+    method: 'DELETE',
+    url: `/post/delete/${id}`,
+    headers: headers,
+    cache: 'no-cache',
+  });

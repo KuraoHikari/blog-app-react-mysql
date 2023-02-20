@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
-import { Edit, Delete } from '../img';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Delete } from '../img';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Menu } from '../components';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSinglePost } from '../store/post/action';
+import { deleteSinglePost, fetchSinglePost } from '../store/post/action';
 import DOMPurify from 'dompurify';
 
 const Single = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const history = useNavigate();
 
   const postId = location.pathname.split('/')[2];
 
@@ -28,6 +29,7 @@ const Single = () => {
 
   useEffect(() => {
     dispatch(fetchSinglePost(postId));
+    // eslint-disable-next-line
   }, [postId]);
   return (
     <div className="single">
@@ -43,11 +45,11 @@ const Single = () => {
               </div>
               {getPermission(post?.User?.id) && (
                 <div className="edit">
-                  <Link to={`/write?edit=2`}>
+                  {/* <Link to={`/write?edit=2`}>
                     <img src={Edit} alt="edit-post.png" loading="lazy" />
-                  </Link>
+                  </Link> */}
 
-                  <img src={Delete} alt="delete-post.png" loading="lazy" />
+                  <img src={Delete} alt="delete-post.png" loading="lazy" onClick={() => dispatch(deleteSinglePost(postId, history))} />
                 </div>
               )}
             </div>
@@ -60,7 +62,7 @@ const Single = () => {
           </div>
         </>
       )}
-      {!isCreateLoading && <Menu recomended={post?.recomend} />}
+      {!isCreateLoading && <Menu recomended={post?.recomend} postId={postId} />}
     </div>
   );
 };
