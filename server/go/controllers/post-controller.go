@@ -7,7 +7,6 @@ import (
 	"golang-blog-app/service"
 	"net/http"
 	"strconv"
-	"time"
 
 	"golang-blog-app/dto"
 
@@ -60,16 +59,8 @@ func (c *postController) FindAllPost(context *gin.Context) {
 }
 
 type GetOneWithRecomend struct {
-	ID        uint64        `json:"id"`
-	Title     string        `json:"title"`
-	Desc      string        `json:"desc"`
-	Image     string        `json:"image"`
-	Cat       string        `json:"cat"`
-	UserID    uint64        `json:"userId"`
-	User      entity.User   `json:"User"`
-	Recomend  []entity.Post `json:"recomend"`
-	CreatedAt time.Time     `json:"created_at"`
-	UpdatedAt time.Time     `json:"updated_at"`
+	*entity.Post
+	Recomend []entity.Post `json:"recomend"`
 }
 
 func (c *postController) FindOneByID(context *gin.Context) {
@@ -85,17 +76,8 @@ func (c *postController) FindOneByID(context *gin.Context) {
 		res := helper.BuildErrorResponse("Data not found", "No data with given id", helper.EmptyObj{})
 		context.JSON(http.StatusNotFound, res)
 	} else {
-
-		var response GetOneWithRecomend
-		response.ID = post.ID
-		response.Title = post.Title
-		response.Desc = post.Desc
-		response.Image = post.Image
-		response.Cat = post.Cat
-		response.UserID = post.UserID
-		response.User = post.User
-		response.CreatedAt = post.CreatedAt
-		response.UpdatedAt = post.UpdatedAt
+		response := GetOneWithRecomend{}
+		response.Post = &post
 
 		posts, _ := c.postService.FindAllv2(3, 0, fmt.Sprintf("cat = '%s'", post.Cat))
 		response.Recomend = posts
