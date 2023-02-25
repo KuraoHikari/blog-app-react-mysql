@@ -1,50 +1,39 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Contacts', {
+    await queryInterface.createTable("Contacts", {
       id: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
       },
       contact_uid: {
         allowNull: false,
         type: Sequelize.UUID,
+        primaryKey: true,
       },
       user_friend: {
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: 'Users',
+            tableName: "Users",
           },
-          key: 'id',
+          key: "id",
         },
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
-      },
-      last_message: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: 'Messages',
-          },
-          key: 'id',
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
+        onUpdate: "cascade",
+        onDelete: "cascade",
       },
       userId: {
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: 'Users',
+            tableName: "Users",
           },
-          key: 'id',
+          key: "id",
         },
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
+        onUpdate: "cascade",
+        onDelete: "cascade",
       },
       createdAt: {
         allowNull: false,
@@ -57,6 +46,8 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Contacts');
+    await queryInterface.dropTable("Contacts");
   },
 };
+
+//note belum nambah last message

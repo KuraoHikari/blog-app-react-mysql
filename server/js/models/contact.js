@@ -1,5 +1,5 @@
-'use strict';
-const { Model } = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Contact extends Model {
     /**
@@ -17,42 +17,41 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          isInt: { msg: 'user_friend required' },
-          notEmpty: { msg: 'user_friend required' },
-          notNull: { msg: 'user_friend required' },
+          isInt: { msg: "user_friend required" },
+          notEmpty: { msg: "user_friend required" },
+          notNull: { msg: "user_friend required" },
         },
       },
       last_message: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         validate: {
-          isInt: { msg: 'userId required' },
-          notEmpty: { msg: 'userId required' },
-          notNull: { msg: 'userId required' },
+          isInt: { msg: "userId required" },
+          notEmpty: { msg: "userId required" },
+          notNull: { msg: "userId required" },
         },
       },
       contact_uid: {
         type: DataTypes.UUID,
         allowNull: false,
         validate: {
-          isInt: { msg: 'userId required' },
-          notEmpty: { msg: 'userId required' },
-          notNull: { msg: 'userId required' },
+          isInt: { msg: "userId required" },
+          notEmpty: { msg: "userId required" },
+          notNull: { msg: "userId required" },
         },
       },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          isInt: { msg: 'userId required' },
-          notEmpty: { msg: 'userId required' },
-          notNull: { msg: 'userId required' },
+          isInt: { msg: "userId required" },
+          notEmpty: { msg: "userId required" },
+          notNull: { msg: "userId required" },
         },
       },
     },
     {
       sequelize,
-      modelName: 'Contact',
+      modelName: "Contact",
     }
   );
   return Contact;
