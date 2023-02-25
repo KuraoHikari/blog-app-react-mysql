@@ -9,6 +9,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      contact_uid: {
+        allowNull: false,
+        type: Sequelize.UUID,
+      },
       user_friend: {
         type: Sequelize.INTEGER,
         references: {

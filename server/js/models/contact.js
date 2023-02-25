@@ -31,6 +31,15 @@ module.exports = (sequelize, DataTypes) => {
           notNull: { msg: 'userId required' },
         },
       },
+      contact_uid: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        validate: {
+          isInt: { msg: 'userId required' },
+          notEmpty: { msg: 'userId required' },
+          notNull: { msg: 'userId required' },
+        },
+      },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,

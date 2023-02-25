@@ -21,13 +21,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT,
       },
-      contactId: {
+      contactUid: {
         type: Sequelize.INTEGER,
         references: {
           model: {
             tableName: 'Contacts',
           },
-          key: 'id',
+          key: 'contact_uid',
         },
         onUpdate: 'cascade',
         onDelete: 'cascade',

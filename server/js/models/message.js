@@ -39,8 +39,8 @@ module.exports = (sequelize, DataTypes) => {
           notNull: { msg: 'desc required' },
         },
       },
-      contactId: {
-        type: DataTypes.INTEGER,
+      contactUid: {
+        type: DataTypes.UUID,
         allowNull: false,
         validate: {
           isInt: { msg: 'contactId required' },
