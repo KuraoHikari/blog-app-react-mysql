@@ -1,17 +1,17 @@
-"use strict";
+'use strict';
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.addColumn("Contacts", "last_message", {
+    await queryInterface.addColumn('Contacts', 'last_message', {
       type: Sequelize.INTEGER,
       references: {
         model: {
-          tableName: "Messages",
+          tableName: 'Messages',
         },
-        key: "id",
+        key: 'id',
       },
-      onUpdate: "cascade",
-      onDelete: "cascade",
+      onUpdate: 'cascade',
+      onDelete: 'cascade',
     });
     /**
      * Add altering commands here.
@@ -22,7 +22,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeColumn("Contacts", "last_message", {});
+    await queryInterface.removeColumn('Contacts', 'last_message', {});
     /**
      * Add reverting commands here.
      *

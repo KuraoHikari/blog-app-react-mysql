@@ -1,4 +1,4 @@
-const { Message, Contact } = require("../models");
+const { Message, Contact } = require('../models');
 
 async function sendMessage(req, res, next) {
   try {

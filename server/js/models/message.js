@@ -8,27 +8,25 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      Message.belongsTo(models.Contact, { foreignKey: 'contactUid' }); //<karena FK ada di table Post
       // define association here
+      Message.hasOne(models.Contact, { as: 'lastMessage', foreignKey: 'last_message' });
     }
   }
   Message.init(
     {
       from_user: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         validate: {
           isInt: { msg: 'contactId required' },
           notEmpty: { msg: 'contactId required' },
-          notNull: { msg: 'contactId required' },
         },
       },
       to_user: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         validate: {
           isInt: { msg: 'contactId required' },
           notEmpty: { msg: 'contactId required' },
-          notNull: { msg: 'contactId required' },
         },
       },
       message: {
@@ -36,16 +34,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: { msg: 'desc required' },
-          notNull: { msg: 'desc required' },
         },
       },
       contactUid: {
         type: DataTypes.UUID,
-        allowNull: false,
         validate: {
-          isInt: { msg: 'contactId required' },
           notEmpty: { msg: 'contactId required' },
-          notNull: { msg: 'contactId required' },
         },
       },
     },

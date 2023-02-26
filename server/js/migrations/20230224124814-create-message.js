@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Messages", {
+    await queryInterface.createTable('Messages', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,11 +10,9 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       from_user: {
-        allowNull: false,
         type: Sequelize.INTEGER,
       },
       to_user: {
-        allowNull: false,
         type: Sequelize.INTEGER,
       },
       message: {
@@ -25,12 +23,12 @@ module.exports = {
         type: Sequelize.UUID,
         references: {
           model: {
-            tableName: "Contacts",
+            tableName: 'Contacts',
           },
-          key: "contact_uid",
+          key: 'contact_uid',
         },
-        onUpdate: "cascade",
-        onDelete: "cascade",
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +41,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Messages");
+    await queryInterface.dropTable('Messages');
   },
 };

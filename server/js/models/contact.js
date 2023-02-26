@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Contact extends Model {
     /**
@@ -9,49 +9,45 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Contact.belongsTo(models.User, { as: 'userFriend', foreignKey: 'user_friend' }); //<karena FK ada di table Post
+      Contact.belongsTo(models.User, { as: 'user', foreignKey: 'userId' }); //<karena FK ada di table Post
+      Contact.hasMany(models.Message, { foreignKey: 'contactUid' });
+      Contact.belongsTo(models.Message, { as: 'lastMessage', foreignKey: 'last_message' }); //<karena FK ada di table Post
     }
   }
   Contact.init(
     {
       user_friend: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         validate: {
-          isInt: { msg: "user_friend required" },
-          notEmpty: { msg: "user_friend required" },
-          notNull: { msg: "user_friend required" },
+          isInt: { msg: 'user_friend required' },
+          notEmpty: { msg: 'user_friend required' },
         },
       },
       last_message: {
         type: DataTypes.INTEGER,
         validate: {
-          isInt: { msg: "userId required" },
-          notEmpty: { msg: "userId required" },
-          notNull: { msg: "userId required" },
+          isInt: { msg: 'userId required' },
+          notEmpty: { msg: 'userId required' },
         },
       },
       contact_uid: {
         type: DataTypes.UUID,
-        allowNull: false,
         validate: {
-          isInt: { msg: "userId required" },
-          notEmpty: { msg: "userId required" },
-          notNull: { msg: "userId required" },
+          notEmpty: { msg: 'userId required' },
         },
       },
       userId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         validate: {
-          isInt: { msg: "userId required" },
-          notEmpty: { msg: "userId required" },
-          notNull: { msg: "userId required" },
+          isInt: { msg: 'userId required' },
+          notEmpty: { msg: 'userId required' },
         },
       },
     },
     {
       sequelize,
-      modelName: "Contact",
+      modelName: 'Contact',
     }
   );
   return Contact;
