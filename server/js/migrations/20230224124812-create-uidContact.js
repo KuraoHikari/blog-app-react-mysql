@@ -2,33 +2,17 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Messages', {
+    await queryInterface.createTable('UidContacts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      from_user: {
-        type: Sequelize.INTEGER,
-      },
-      to_user: {
-        type: Sequelize.INTEGER,
-      },
-      message: {
-        allowNull: false,
-        type: Sequelize.TEXT,
-      },
       contactUid: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: 'UidContacts',
-          },
-          key: 'id',
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade',
+        type: Sequelize.UUID,
+        unique: true,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -41,6 +25,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Messages');
+    await queryInterface.dropTable('UidContacts');
   },
 };

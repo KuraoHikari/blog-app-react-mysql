@@ -7,19 +7,21 @@ async function authenticate(req, res, next) {
 
     if (!access_token) {
       throw { name: 'Unauthorized' };
-    }
-    const payload = verifToken(access_token);
-    const user = await User.findByPk(payload.id);
-    if (!user) {
-      throw { name: 'Unauthorized' };
-    }
-    req.user = {
-      id: payload.id,
-      email: payload.email,
-      username: payload.username,
-    };
+    } else {
+      const payload = verifToken(access_token);
+      const user = await User.findByPk(payload.id);
+      if (!user) {
+        throw { name: 'Unauthorized' };
+      } else {
+        req.user = {
+          id: payload.id,
+          email: payload.email,
+          username: payload.username,
+        };
 
-    next();
+        next();
+      }
+    }
   } catch (err) {
     // console.log(err);
     next(err);

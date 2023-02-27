@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Message.belongsTo(models.Contact, { foreignKey: 'contactUid' }); //<karena FK ada di table Post
       // define association here
+      Message.belongsTo(models.UidContact, { as: 'messageUid', foreignKey: 'contactUid' }); //<karena FK ada di table Post
       Message.hasOne(models.Contact, { as: 'lastMessage', foreignKey: 'last_message' });
     }
   }
@@ -18,28 +18,29 @@ module.exports = (sequelize, DataTypes) => {
       from_user: {
         type: DataTypes.INTEGER,
         validate: {
-          isInt: { msg: 'contactId required' },
-          notEmpty: { msg: 'contactId required' },
+          isInt: { msg: 'from_user required' },
+          notEmpty: { msg: 'from_user required' },
         },
       },
       to_user: {
         type: DataTypes.INTEGER,
         validate: {
-          isInt: { msg: 'contactId required' },
-          notEmpty: { msg: 'contactId required' },
+          isInt: { msg: 'to_user required' },
+          notEmpty: { msg: 'to_user required' },
         },
       },
       message: {
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
-          notEmpty: { msg: 'desc required' },
+          notEmpty: { msg: 'message required' },
         },
       },
       contactUid: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         validate: {
-          notEmpty: { msg: 'contactId required' },
+          isInt: { msg: 'contactUid required' },
+          notEmpty: { msg: 'contactUid required' },
         },
       },
     },

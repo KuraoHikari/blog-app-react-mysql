@@ -19,6 +19,8 @@ async function findAllPost(req, res, next) {
 
     if (count === 0) {
       throw { name: 'NotFound' };
+      // const data = getPagingData(rows, count, page, limit);
+      // return res.status(200).json(SuccessResponse(data));
     } else {
       const data = getPagingData(rows, count, page, limit);
       return res.status(200).json(SuccessResponse(data));

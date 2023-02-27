@@ -7,10 +7,18 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         type: Sequelize.INTEGER,
-      },
-      contact_uid: {
-        type: Sequelize.UUID,
         primaryKey: true,
+      },
+      contactUid: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'UidContacts',
+          },
+          key: 'id',
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
       },
       user_friend: {
         type: Sequelize.INTEGER,

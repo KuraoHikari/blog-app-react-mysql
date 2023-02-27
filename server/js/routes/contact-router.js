@@ -1,6 +1,7 @@
 const router = require('express').Router();
-const { addContact, findAllContact } = require('../controllers');
+const { findAllContact } = require('../controllers');
+const { authenticate } = require('../middleware');
 
-router.post('/', findAllContact);
+router.get('/', authenticate, findAllContact);
 
 module.exports = router;

@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Contact.belongsTo(models.UidContact, { as: 'uidContact', foreignKey: 'contactUid' }); //<karena FK ada di table Post
       Contact.belongsTo(models.User, { as: 'userFriend', foreignKey: 'user_friend' }); //<karena FK ada di table Post
       Contact.belongsTo(models.User, { as: 'user', foreignKey: 'userId' }); //<karena FK ada di table Post
-      Contact.hasMany(models.Message, { foreignKey: 'contactUid' });
       Contact.belongsTo(models.Message, { as: 'lastMessage', foreignKey: 'last_message' }); //<karena FK ada di table Post
     }
   }
@@ -27,14 +27,15 @@ module.exports = (sequelize, DataTypes) => {
       last_message: {
         type: DataTypes.INTEGER,
         validate: {
-          isInt: { msg: 'userId required' },
-          notEmpty: { msg: 'userId required' },
+          isInt: { msg: 'last_message required' },
+          notEmpty: { msg: 'last_message required' },
         },
       },
-      contact_uid: {
-        type: DataTypes.UUID,
+      contactUid: {
+        type: DataTypes.INTEGER,
         validate: {
-          notEmpty: { msg: 'userId required' },
+          isInt: { msg: 'contactUid required' },
+          notEmpty: { msg: 'contactUid required' },
         },
       },
       userId: {

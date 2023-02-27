@@ -4,5 +4,6 @@ const authorize = require('./authorize');
 const multer = require('./multer');
 const imageValidation = require('./imageValidation');
 const imgKit = require('./imgKit');
+const createOrSendUid = require('./contactUid');
 
-module.exports = { errorHandler, authenticate, authorize, multer, imgKit, imageValidation };
+module.exports = { errorHandler, authenticate, authorize, multer, imgKit, imageValidation, createOrSendUid };

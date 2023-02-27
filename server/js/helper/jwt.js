@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 const jwt = require('jsonwebtoken');
 
 function signToken(payload) {
-  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 60 * 1 });
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '24h' });
 }
 function verifToken(token) {
   return jwt.verify(token, process.env.JWT_SECRET);
