@@ -1,5 +1,5 @@
 const { checkPassword, signToken, SuccessResponse } = require('../helper');
-const { User } = require('../models');
+const { User, Contact } = require('../models');
 
 async function registerUser(req, res, next) {
   try {
@@ -35,7 +35,42 @@ async function loginUser(req, res, next) {
   }
 }
 
+async function findUserNewContact(req, res, next) {
+  try {
+    const { id: from_user } = req.user;
+    const { email } = req.body;
+    const newFriend = await User.findOne({
+      where: { email: email },
+    });
+
+    if (!newFriend) {
+      throw { message: 'User Not Found' };
+    } else {
+      const { id: newFriendId, email, username } = newFriend;
+
+      if (newFriendId === from_user) {
+        throw { message: 'bruhhh' };
+      }
+
+      const contact = await Contact.findOne({
+        where: { user_friend: newFriendId, userId: from_user },
+      });
+
+      if (!contact) {
+        res.status(200).json(SuccessResponse({ newFriendId, email, username }));
+      } else {
+        throw { message: 'User has been your friend' };
+      }
+    }
+  } catch (err) {
+    console.log('🚀 ~ file: auth-controller.js:59 ~ findUserNewContact ~ err:', err);
+
+    next(err);
+  }
+}
+
 module.exports = {
   registerUser,
   loginUser,
+  findUserNewContact,
 };

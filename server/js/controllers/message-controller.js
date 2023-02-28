@@ -57,7 +57,7 @@ async function getMessage(req, res, next) {
       return res.status(200).json(SuccessResponse(data));
     }
   } catch (err) {
-    console.log('🚀 ~ file: message-controller.js:58 ~ getMessage ~ err:', err);
+    //console.log('🚀 ~ file: message-controller.js:58 ~ getMessage ~ err:', err);
 
     next(err);
   }

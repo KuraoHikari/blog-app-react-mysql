@@ -17,7 +17,7 @@ async function addContact(req, res, next) {
       contact_uid: '673ed3c7-710c-4ad8-b694-356e92c32278',
     });
 
-    console.log('🚀 ~ file: contact-controller.js:14 ~ addContact ~ result:', result);
+    // console.log('🚀 ~ file: contact-controller.js:14 ~ addContact ~ result:', result);
     res.status(201).json(SuccessResponse(result));
   } catch (err) {
     console.log(err);
@@ -70,6 +70,8 @@ async function findAllContact(req, res, next) {
     next(err);
   }
 }
+
+//next feature
 async function deleteContact(req, res, next) {
   try {
   } catch (err) {
