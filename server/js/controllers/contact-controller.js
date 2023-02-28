@@ -28,13 +28,14 @@ async function addContact(req, res, next) {
 async function findAllContact(req, res, next) {
   try {
     const { id } = req.user;
-    const { page, size } = req.query;
+    const { page, size, email } = req.query;
     const { limit, offset } = getPagination(page, size);
     const { count, rows } = await Contact.findAndCountAll({
       limit: limit,
       offset: offset,
       where: {
         userId: +id,
+        '$userFriend.email$': email,
         last_message: {
           [Op.not]: null, // Like: last_message IS NOT NULL
         },
@@ -44,12 +45,12 @@ async function findAllContact(req, res, next) {
         {
           model: User,
           as: 'user',
-          attributes: ['id', 'email'],
+          attributes: ['id', 'email', 'username'],
         },
         {
           model: User,
           as: 'userFriend',
-          attributes: ['id', 'email'],
+          attributes: ['id', 'email', 'username'],
         },
         {
           model: Message,
@@ -65,7 +66,7 @@ async function findAllContact(req, res, next) {
       return res.status(200).json(SuccessResponse(data));
     }
   } catch (err) {
-    // console.log('🚀 ~ file: contact-controller.js:65 ~ findAllContact ~ err:', err);
+    console.log('🚀 ~ file: contact-controller.js:65 ~ findAllContact ~ err:', err);
 
     next(err);
   }
